@@ -1,35 +1,31 @@
 import tkinter as tk
 
-class AnimatedCircle(tk.Canvas):
+
+class AnimatedCanvas(tk.Canvas):
     def __init__(self, master=None, **kwargs):
         super().__init__(master, **kwargs)
 
-        #Создаем круг
-        self.circle = self.create_oval(0, 0, 100, 100,fill= 'blue')
+        # Создаем круг
+        self.circle = self.create_oval(10, 10, 50, 50, fill="blue")
 
-        #Переменная для хранения текущего положения круга
-        self.x = 50
-        self.y = 50
+        # Запускаем анимацию
+        self.animate()
 
-    def move(self):
-        self.move(self.circle, 10, 0)
-        self.after(100, self.move)
+    def animate(self):
+        # Перемещаем круг на 1 пиксель вправо и вниз
+        self.move(self.circle, 1, 1)
 
-class App(tk.Tk):
-    def __init__(self):
-        super().__init__()
+        # Повторяем анимацию через 20 миллисекунд
+        self.after(20, self.animate)
 
-        #Настраиваем окно приложения
-        self.title("Animated Circle")
-        self.geometry("800x600")
 
-        #Создаем экземпляр класса AnimatedCircle
-        self.animated_circle = AnimatedCircle(self,width=800,height=600)
-        self.animated_circle.pack()
+# Создаем главное окно приложения
+root = tk.Tk()
+root.title("Animation Example")
 
-        #Запускаем анимацию
-        self.animated_circle.pack()
+# Создаем экземпляр нашего класса AnimatedCanvas
+canvas = AnimatedCanvas(root, width=500, height=300, bg="white")
+canvas.pack(fill=tk.BOTH, expand=True)
 
-if __name__ == "__main__":
-    app = App()
-    app.mainloop()
+# Запускаем главный цикл приложения
+root.mainloop()
